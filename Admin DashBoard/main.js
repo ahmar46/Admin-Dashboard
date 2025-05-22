@@ -53,15 +53,28 @@ searchButton.addEventListener('click', function (e) {
 })
 
 // Dark Mode Switch
-const switchMode = document.getElementById('switch-mode');
+document.addEventListener('DOMContentLoaded', function () {
+    const switchMode = document.getElementById('switch-mode');
 
-switchMode.addEventListener('change', function () {
-    if (this.checked) {
-        document.body.classList.add('dark');
-    } else {
-        document.body.classList.remove('dark');
+    if (switchMode) {
+        // Check if dark mode was previously enabled
+        const isDark = localStorage.getItem('darkMode') === 'enabled';
+        if (isDark) {
+            document.body.classList.add('dark');
+            switchMode.checked = true;
+        }
+
+        switchMode.addEventListener('change', function () {
+            if (this.checked) {
+                document.body.classList.add('dark');
+                localStorage.setItem('darkMode', 'enabled');
+            } else {
+                document.body.classList.remove('dark');
+                localStorage.setItem('darkMode', 'disabled');
+            }
+        });
     }
-})
+});
 
 // Notification Menu Toggle
 document.querySelector('.notification').addEventListener('click', function () {
